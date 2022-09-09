@@ -1,28 +1,41 @@
 #include <iostream>
 #include <vector>
-
-using namespace std;
+#include <ctime>
 
 
 class Person{
+  unsigned int yearsWithoutContribution;
+  unsigned int age,yearsOfContribution;
+  std::string name;
+  std::string address;
+  std::string occupation;
+  unsigned int randomizedSalary;
   public:
-
-  int age,yearsOfContribution;
-  string name,address,occupation;
-  Person(int x, int y, string a, string b, string c){
+  Person(int x, int y, std::string a, std::string b, std::string c){
     age = x;
     yearsOfContribution = y;
     name = a;
     address = b;
     occupation = c;
+    yearsWithoutContribution = age - yearsOfContribution;
+    if(yearsWithoutContribution < 20){
+      srand(time(NULL));
+      randomizedSalary = rand() % (3000 + 1 - 1500) + 1500;
+    }
+    else{
+      srand(time(NULL));
+      randomizedSalary = rand() % (2000 + 1 - 800) + 800;
+    }
   };
-  int displayInformations(){
-    cout << "\n" << "Your informations: " << "\n" << "\n";
-  cout << "Name: " << name << "\n";
-  cout << "Age: " << age << "\n" << "Years of contribution: " << yearsOfContribution << "\n";
-  cout << "Address: " << address << "\n" << "Current occupation: " << occupation << "\n";
+  void displayInformations(){
+  std::cout << "\n" << "Your informations: " << "\n";
+  std::cout << "Name: " << name << "\n";
+  std::cout << "Age: " << age << "\n" << "Years of contribution: " << yearsOfContribution << "\n";
+  std::cout << "Address: " << address << "\n" << "Current occupation: " << occupation << "\n";
+  std::cout << "Years unworking: " << yearsWithoutContribution << "\n";
+  std::cout << "FINAL SALARY: " << "R$" << randomizedSalary << ",00" << "\n";
+  };
 
-  }
 };
 
 bool checkContribution(int contribution, int age){
@@ -33,26 +46,26 @@ bool checkContribution(int contribution, int age){
 };
 
 int main(){
-  vector<Person> arr;
+  std::vector<Person> arr;
   int age;
   int years;
-  string name;
-  string address;
-  string occupation;
+  std::string name;
+  std::string address;
+  std::string occupation;
   char YN;
   bool flag = true;
   bool contributionFlag;
   while(flag){
-    cout << "Enter your age: > " && cin >> age;
+    std::cout << "Enter your age: > " && std::cin >> age;
   do{
-    cout << "Enter your years of contribution: " && cin >> years&& cout << "\n";
+    std::cout << "Enter your years of contribution: " && std::cin >> years && std::cout << "\n";
     bool contribution = checkContribution(years,age);
     if(contribution){
-      cout << "Valid contribution year." << "\n";
+      std::cout << "Valid contribution year." << "\n";
       break;
     }
     else{
-      cout << "It is more than the necessary." << "\n";
+      std::cout << "It is more than the necessary." << "\n";
       continue;
     }
   }
@@ -60,20 +73,18 @@ int main(){
   while(contributionFlag); 
 
 
-  cout << "What about your name? " && getline(cin >> ws,name);
-  cout << "Your address? " && getline(cin >> ws,address);
-  cout << "Your occupation? " && getline(cin >> ws,occupation);
+  std::cout << "What about your name? " && getline(std::cin >> std::ws,name);
+  std::cout << "Your address? " && getline(std::cin >> std::ws,address);
+  std::cout << "Your occupation? " && getline(std::cin >> std::ws,occupation);
   Person newPerson(age,years,name,address,occupation);
-
   newPerson.displayInformations();
   arr.push_back(newPerson);
 
-  cout << "\n" << "Do you wanna register new informations? " && cin >> YN;
-  YN == 'y' ? flag : flag = false && cout << "Lets try again then!! ";
+  std::cout << "\n" << "Do you wanna register new informations? " << std::endl && std::cin >> YN;
+  YN == 'y' ? flag : flag = false && std::cout << "Lets try again then!! ";
   };
-  int listSize = sizeof(arr)/sizeof(arr);
-  for(int i = 0;i<=listSize;++i){
-    cout << arr[i].displayInformations() << "\n";
+  for(int i = 0;i<arr.size();++i){
+    arr[i].displayInformations();
   }
   
   return 0;
