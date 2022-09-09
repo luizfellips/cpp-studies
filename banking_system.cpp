@@ -80,7 +80,6 @@ void displayAccounts(){
 
 }
 
-
 int main(){
     int option;
     bool flag = true;
